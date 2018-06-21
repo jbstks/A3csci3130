@@ -13,7 +13,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends Activity {
 
-
     private ListView contactListView;
     private FirebaseListAdapter<Contact> firebaseAdapter;
 
@@ -23,7 +22,7 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         //Get the app wide shared variables
-        MyApplicationData appData = (MyApplicationData)getApplication();
+        MyApplicationData appData = (MyApplicationData) getApplication();
 
         //Set-up Firebase
         appData.firebaseDBInstance = FirebaseDatabase.getInstance();
