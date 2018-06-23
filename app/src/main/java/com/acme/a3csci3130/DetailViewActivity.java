@@ -23,13 +23,13 @@ public class DetailViewActivity extends Activity {
         receivedPersonInfo = (Contact) getIntent().getSerializableExtra("Contact");
 
         nameField = (EditText) findViewById(R.id.name);
-        primaryBusinessField = (EditText) findViewById(R.id.primaryBusiness);
+        //primaryBusinessField = (EditText) findViewById(R.id.primaryBusiness);
         addressField = (EditText) findViewById(R.id.address);
-        provinceField = (EditText) findViewById(R.id.province);
+        //provinceField = (EditText) findViewById(R.id.province);
 
         if (receivedPersonInfo != null) {
             nameField.setText(receivedPersonInfo.name);
-            primaryBusinessField.setText(receivedPersonInfo.primaryBusiness);
+            //primaryBusinessField.setText(receivedPersonInfo.primaryBusiness);
             addressField.setText(receivedPersonInfo.address);
             provinceField.setText(receivedPersonInfo.province);
         }
@@ -54,6 +54,6 @@ public class DetailViewActivity extends Activity {
     public void eraseContact(View v)
     {
         //TODO: Erase contact functionality
-        
+
     }
 }
