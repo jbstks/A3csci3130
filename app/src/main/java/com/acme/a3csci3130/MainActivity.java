@@ -3,6 +3,7 @@ package com.acme.a3csci3130;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -11,7 +12,7 @@ import android.widget.TextView;
 import com.firebase.ui.database.FirebaseListAdapter;
 import com.google.firebase.database.FirebaseDatabase;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private ListView contactListView;
     private FirebaseListAdapter<Contact> firebaseAdapter;
