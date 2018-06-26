@@ -9,6 +9,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/**
+ * Activity for the detailed view of a business contact. Shows all the information of the given
+ * <code>contact</code>, and gives the option to update or delete it.
+ *
+ * @author jmfranz
+ * @author jbstks
+ * @version 06/30/18
+ */
 public class DetailViewActivity extends AppCompatActivity {
 
     private EditText nameField, primaryBusinessField, addressField, provinceField;
@@ -16,6 +24,13 @@ public class DetailViewActivity extends AppCompatActivity {
     private Spinner primaryBusinessSpinner, provinceSpinner;
     private MyApplicationData appState;
 
+    /**
+     * Defines what needs to be done when the activity is created:
+     * Grabs the necessary contact data and sets each <code>EditText</code> to its respective content.
+     * Sets up the 2 spinners for <code>primaryBusinessSpinner</code> and <code>provinceSpinner</code>.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +77,20 @@ public class DetailViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * onClick function for when the "UPDATE" button is pressed.
+     * Updates this contact by creating a new <code>contact</code> with the same ID.
+     *
+     * @param v The current view
+     */
     public void updateContact(View v){
         //TODO: Update contact functionality
         //receivedPersonInfo = (Contact) getIntent().getSerializableExtra("Contact");
+        //String personID = appState.firebaseReference.push().getKey();
         String name = nameField.getText().toString();
-        String primaryBusiness = primaryBusinessField.getText().toString();
+        String primaryBusiness = primaryBusinessSpinner.getSelectedItem().toString();
         String address = addressField.getText().toString();
-        String province = provinceField.getText().toString();
+        String province = provinceSpinner.getSelectedItem().toString();
 
         //Contact person = new Contact(personID, name, email);
         Contact person = new Contact(receivedPersonInfo.uid, name, primaryBusiness, address, province);
@@ -78,9 +100,17 @@ public class DetailViewActivity extends AppCompatActivity {
         finish();
     }
 
+    /**
+     * onClick function for when the "ERASE CONTACT" button is pressed.
+     * Deletes this contact by removing the child.
+     *
+     * @param v The current view
+     */
     public void eraseContact(View v)
     {
         //TODO: Erase contact functionality
+        appState.firebaseReference.child(receivedPersonInfo.uid).removeValue();
 
+        finish();
     }
 }

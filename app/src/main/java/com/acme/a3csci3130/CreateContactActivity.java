@@ -2,6 +2,7 @@ package com.acme.a3csci3130;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -9,6 +10,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+/**
+ * Activity to create a new <code>Contact</code> after pressing the "CREATE CONTACT" button in <code>MainActivity</code>
+ * Shows all of input fields necessary to create a <code>Contact</code>, as well as a "SUBMIT" button.
+ *
+ * @author jmfranz
+ * @author jbstks
+ * @version 06/30/18
+ */
 public class CreateContactActivity extends AppCompatActivity {
 
     private Button submitButton;
@@ -16,6 +25,12 @@ public class CreateContactActivity extends AppCompatActivity {
     private Spinner primaryBusinessSpinner, provinceSpinner;
     private MyApplicationData appState;
 
+    /**
+     * Defines what needs to be done when the activity is created:
+     * Sets up the 2 spinners for <code>primaryBusinessSpinner</code> and <code>provinceSpinner</code>.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +60,12 @@ public class CreateContactActivity extends AppCompatActivity {
         provinceSpinner.setAdapter(provinceAdapter);
     }
 
+    /**
+     * onClick function for when the "SUBMIT" button is pressed.
+     * Uses the inputted data to create a <code>Contact</code> object and sends that <code>Contact</code> object to Firebase.
+     *
+     * @param v the current view.
+     */
     public void submitInfoButton(View v) {
         //each entry needs a unique ID
         String personID = appState.firebaseReference.push().getKey();
@@ -53,11 +74,29 @@ public class CreateContactActivity extends AppCompatActivity {
         String address = addressField.getText().toString();
         String province = provinceSpinner.getSelectedItem().toString();
 
-        //Contact person = new Contact(personID, name, email);
-        Contact person = new Contact(personID, name, primaryBusiness, address, province);
+        TextInputLayout nameInputLayout = (TextInputLayout) findViewById(R.id.nameInputLayout);
+        TextInputLayout addressInputLayout = (TextInputLayout) findViewById(R.id.addressInputLayout);
 
-        appState.firebaseReference.child(personID).setValue(person);
+        // Checking for errors in the input
+        boolean error = false;
+        if (name.equals("")) {
+            nameInputLayout.setError((CharSequence) "Name is required");
+            error = true;
+        } else if  (name.length() < 2 || name.length() > 48) {
+            nameInputLayout.setError((CharSequence) "Name needs to be 2-48 characters");
+            error = true;
+        }
+        if (address.length() >= 50) {
+            addressInputLayout.setError((CharSequence) "Address needs be be less than 50 characters");
+            error = true;
+        }
+        System.out.println("error = "+error);
+        if (error == false) {
+            Contact person = new Contact(personID, name, primaryBusiness, address, province);
 
-        finish();
+            appState.firebaseReference.child(personID).setValue(person);
+
+            finish();
+        }
     }
 }

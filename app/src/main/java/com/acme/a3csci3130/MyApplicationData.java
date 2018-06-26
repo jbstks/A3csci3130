@@ -6,7 +6,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 /**
- * Created by Franz on 2017-05-31.
+ * Application Data
+ *
+ * @author jmfranz
+ * @version 05/31/17
  */
 
 public class MyApplicationData extends Application {

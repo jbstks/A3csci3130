@@ -8,33 +8,36 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Class that defines how the data will be stored in the
- * Firebase database. This is converted to a JSON format
+ * Class that defines how the data will be stored in the Firebase database. This is converted to a JSON format.
  *
  * @author jmfranz
  * @author jbstks
- * @date 06/30/2018
+ * @version 06/30/18
  */
 
 public class Contact implements Serializable {
 
     public  String uid;
     public  String name;
-    //public  String email;
     public  String primaryBusiness;
     public  String address;
     public  String province;
 
+    /**
+     * Default constructor required for calls to DataSnapshot.getValue.
+     */
     public Contact() {
-        // Default constructor required for calls to DataSnapshot.getValue
     }
 
-    /*public Contact(String uid, String name, String email){
-        this.uid = uid;
-        this.name = name;
-        this.email = email;
-    }*/
-
+    /**
+     * Constructor to create a contact object.
+     *
+     * @param uid               ID of the business contact
+     * @param name              name of the business contact
+     * @param primaryBusiness   type of business the business contact primarily does
+     * @param address           address of the business contact
+     * @param province          province or territory of the business contact
+     */
     public Contact(String uid, String name, String primaryBusiness, String address, String province){
         this.uid = uid;
         this.name = name;
@@ -43,12 +46,16 @@ public class Contact implements Serializable {
         this.province = province;
     }
 
+    /**
+     * Function to map the Contact data to go into the Firebase database.
+     *
+     * @return the mapped data of the Contact
+     */
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("uid", uid);
         result.put("name", name);
-        //result.put("email", email);
         result.put("primaryBusiness", primaryBusiness);
         result.put("address", address);
         result.put("province", province);
