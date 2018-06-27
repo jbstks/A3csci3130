@@ -21,7 +21,7 @@ import android.widget.Spinner;
 public class CreateContactActivity extends AppCompatActivity {
 
     private Button submitButton;
-    private EditText nameField, primaryBusinessField, addressField, provinceField;
+    private EditText businessNumberField, nameField, addressField;
     private Spinner primaryBusinessSpinner, provinceSpinner;
     private MyApplicationData appState;
 
@@ -39,6 +39,7 @@ public class CreateContactActivity extends AppCompatActivity {
         appState = ((MyApplicationData) getApplicationContext());
 
         submitButton = (Button) findViewById(R.id.submitButton);
+        businessNumberField = (EditText) findViewById(R.id.number);
         nameField = (EditText) findViewById(R.id.name);
         addressField = (EditText) findViewById(R.id.address);
 
@@ -68,17 +69,26 @@ public class CreateContactActivity extends AppCompatActivity {
      */
     public void submitInfoButton(View v) {
         //each entry needs a unique ID
-        String personID = appState.firebaseReference.push().getKey();
+        //String personID = appState.firebaseReference.push().getKey();
+        String businessNumber = businessNumberField.getText().toString();
         String name = nameField.getText().toString();
         String primaryBusiness = primaryBusinessSpinner.getSelectedItem().toString();
         String address = addressField.getText().toString();
         String province = provinceSpinner.getSelectedItem().toString();
 
+        TextInputLayout numberInputLayout = (TextInputLayout) findViewById(R.id.numberInputLayout);
         TextInputLayout nameInputLayout = (TextInputLayout) findViewById(R.id.nameInputLayout);
         TextInputLayout addressInputLayout = (TextInputLayout) findViewById(R.id.addressInputLayout);
 
         // Checking for errors in the input
         boolean error = false;
+        if (businessNumber.equals("")) {
+            numberInputLayout.setError((CharSequence) "Business number is required");
+            error = true;
+        } else if (businessNumber.length() != 9) {
+            numberInputLayout.setError((CharSequence) "Business number needs to be 9 characters");
+            error = true;
+        }
         if (name.equals("")) {
             nameInputLayout.setError((CharSequence) "Name is required");
             error = true;
@@ -90,11 +100,10 @@ public class CreateContactActivity extends AppCompatActivity {
             addressInputLayout.setError((CharSequence) "Address needs be be less than 50 characters");
             error = true;
         }
-        System.out.println("error = "+error);
-        if (error == false) {
-            Contact person = new Contact(personID, name, primaryBusiness, address, province);
+        if (!error) {
+            Contact person = new Contact(businessNumber, name, primaryBusiness, address, province);
 
-            appState.firebaseReference.child(personID).setValue(person);
+            appState.firebaseReference.child(businessNumber).setValue(person);
 
             finish();
         }

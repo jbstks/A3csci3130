@@ -17,7 +17,7 @@ import java.util.Map;
 
 public class Contact implements Serializable {
 
-    public  String uid;
+    public  String businessNumber;
     public  String name;
     public  String primaryBusiness;
     public  String address;
@@ -32,14 +32,14 @@ public class Contact implements Serializable {
     /**
      * Constructor to create a contact object.
      *
-     * @param uid               ID of the business contact
+     * @param businessNumber    ID of the business contact
      * @param name              name of the business contact
      * @param primaryBusiness   type of business the business contact primarily does
      * @param address           address of the business contact
      * @param province          province or territory of the business contact
      */
-    public Contact(String uid, String name, String primaryBusiness, String address, String province){
-        this.uid = uid;
+    public Contact(String businessNumber, String name, String primaryBusiness, String address, String province){
+        this.businessNumber = businessNumber;
         this.name = name;
         this.primaryBusiness = primaryBusiness;
         this.address = address;
@@ -54,7 +54,7 @@ public class Contact implements Serializable {
     @Exclude
     public Map<String, Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("uid", uid);
+        result.put("businessNumber", businessNumber);
         result.put("name", name);
         result.put("primaryBusiness", primaryBusiness);
         result.put("address", address);

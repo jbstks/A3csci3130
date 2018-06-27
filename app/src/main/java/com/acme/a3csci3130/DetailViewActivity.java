@@ -19,7 +19,7 @@ import android.widget.Spinner;
  */
 public class DetailViewActivity extends AppCompatActivity {
 
-    private EditText nameField, primaryBusinessField, addressField, provinceField;
+    private EditText businessNumberField, nameField, addressField, provinceField;
     Contact receivedPersonInfo;
     private Spinner primaryBusinessSpinner, provinceSpinner;
     private MyApplicationData appState;
@@ -41,6 +41,7 @@ public class DetailViewActivity extends AppCompatActivity {
 
         receivedPersonInfo = (Contact) getIntent().getSerializableExtra("Contact");
 
+        businessNumberField = (EditText) findViewById(R.id.number);
         nameField = (EditText) findViewById(R.id.name);
         addressField = (EditText) findViewById(R.id.address);
 
@@ -62,14 +63,13 @@ public class DetailViewActivity extends AppCompatActivity {
         provinceSpinner.setAdapter(provinceAdapter);
 
         if (receivedPersonInfo != null) {
+            businessNumberField.setText(receivedPersonInfo.businessNumber);
             nameField.setText(receivedPersonInfo.name);
-            //primaryBusinessField.setText(receivedPersonInfo.primaryBusiness);
             for (int i = 0; i < primaryBusinesses.length; i++) {
                 if (primaryBusinesses[i].equals(receivedPersonInfo.primaryBusiness))
                     primaryBusinessSpinner.setSelection(i);
             }
             addressField.setText(receivedPersonInfo.address);
-            //provinceField.setText(receivedPersonInfo.province);
             for (int i = 0; i < provinces.length; i++) {
                 if (provinces[i].equals(receivedPersonInfo.province))
                     provinceSpinner.setSelection(i);
@@ -85,17 +85,15 @@ public class DetailViewActivity extends AppCompatActivity {
      */
     public void updateContact(View v){
         //TODO: Update contact functionality
-        //receivedPersonInfo = (Contact) getIntent().getSerializableExtra("Contact");
-        //String personID = appState.firebaseReference.push().getKey();
         String name = nameField.getText().toString();
         String primaryBusiness = primaryBusinessSpinner.getSelectedItem().toString();
         String address = addressField.getText().toString();
         String province = provinceSpinner.getSelectedItem().toString();
 
         //Contact person = new Contact(personID, name, email);
-        Contact person = new Contact(receivedPersonInfo.uid, name, primaryBusiness, address, province);
+        Contact person = new Contact(receivedPersonInfo.businessNumber, name, primaryBusiness, address, province);
 
-        appState.firebaseReference.child(receivedPersonInfo.uid).setValue(person);
+        appState.firebaseReference.child(receivedPersonInfo.businessNumber).setValue(person);
 
         finish();
     }
@@ -109,7 +107,7 @@ public class DetailViewActivity extends AppCompatActivity {
     public void eraseContact(View v)
     {
         //TODO: Erase contact functionality
-        appState.firebaseReference.child(receivedPersonInfo.uid).removeValue();
+        appState.firebaseReference.child(receivedPersonInfo.businessNumber).removeValue();
 
         finish();
     }
