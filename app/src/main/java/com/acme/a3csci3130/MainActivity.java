@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
         appData.firebaseReference = appData.firebaseDBInstance.getReference("contacts");
 
         //Get the reference to the UI contents
-        contactListView = (ListView) findViewById(R.id.listView);
+        contactListView = (ListView) findViewById(R.id.lv);
 
         //Set up the List View
         firebaseAdapter = new FirebaseListAdapter<Contact>(this, Contact.class,

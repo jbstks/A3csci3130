@@ -1,6 +1,5 @@
 package com.acme.a3csci3130;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -38,7 +37,7 @@ public class CreateContactActivity extends AppCompatActivity {
         //Get the app wide shared variables
         appState = ((MyApplicationData) getApplicationContext());
 
-        submitButton = (Button) findViewById(R.id.submitButton);
+        submitButton = (Button) findViewById(R.id.createButton);
         businessNumberField = (EditText) findViewById(R.id.number);
         nameField = (EditText) findViewById(R.id.name);
         addressField = (EditText) findViewById(R.id.address);
